@@ -31,8 +31,7 @@ echo Found %vc_dir%
 call "%vc_dir%\Common7\Tools\vsdevcmd.bat" -arch=x64 -host_arch=x64
 echo Building
 mkdir "%src_dir%\lib\x64"
-cl	/I "%src_dir%\script\microsoft.web.webview2.1.0.664.37\build\native\include" ^
-	"%src_dir%\script\microsoft.web.webview2.1.0.664.37\build\native\x64\WebView2LoaderStatic.lib" "version.lib" "Shell32.lib" ^
+cl	/I "%src_dir%\script\microsoft.web.webview2.1.0.664.37\build\native\include"
 	/std:c++17 /EHsc /O2 /GS /c "/Fo%build_dir%"\ ^
 	"%src_dir%\webview.cc" "/OUT:%build_dir%\webview.obj" || exit \b
 lib	"%build_dir%\webview.obj" "/OUT:%build_dir%\webview.lib"
