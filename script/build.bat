@@ -29,10 +29,13 @@ if not exist "%vc_dir%\Common7\Tools\vsdevcmd.bat" (
 echo Found %vc_dir%
 
 call "%vc_dir%\Common7\Tools\vsdevcmd.bat" -arch=x64 -host_arch=x64
-echo Building
-mkdir "%src_dir%\lib\x64"
-cl	/I "%src_dir%\script\microsoft.web.webview2.1.0.664.37\build\native\include"
-	/std:c++17 /EHsc /O2 /GS /c "/Fo%build_dir%"\ ^
-	"%src_dir%\webview.cc" "/OUT:%build_dir%\webview.obj" || exit \b
-lib	"%build_dir%\webview.obj" "/OUT:%build_dir%\webview.lib"
-copy "%build_dir%\webview.lib" "%src_dir%\lib\x64"
+echo Building webview.dll (x64)
+mkdir "%src_dir%\dll\x64"
+cl /D "WEBVIEW_API=__declspec(dllexport)" ^
+	/I "%src_dir%\script\microsoft.web.webview2.1.0.664.37\build\native\include" ^
+	"%src_dir%\script\microsoft.web.webview2.1.0.664.37\build\native\x64\WebView2Loader.dll.lib" ^
+	/std:c++17 /EHsc "/Fo%build_dir%"\ ^
+	"%src_dir%\webview.cc" /link /DLL "/OUT:%build_dir%\webview.dll" || exit \b
+copy "%build_dir%\webview.dll" "%src_dir%\dll\x64"
+copy "%src_dir%\script\microsoft.web.webview2.1.0.664.37\build\native\x64\WebView2Loader.dll" "%build_dir%"
+copy "%src_dir%\script\microsoft.web.webview2.1.0.664.37\build\native\x64\WebView2Loader.dll" "%src_dir%\dll\x64"
