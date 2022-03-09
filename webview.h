@@ -1127,7 +1127,7 @@ public:
             return 0;
           });
       RegisterClassExW(&wc);
-      m_window = CreateWindowW(L"webview", L"", WS_POPUP,
+      m_window = CreateWindowW(L"webview", L"", WS_OVERLAPPEDWINDOW,
                                CW_USEDEFAULT, CW_USEDEFAULT, 640, 480, nullptr,
                                nullptr, GetModuleHandle(nullptr), nullptr);
       SetWindowLongPtr(m_window, GWLP_USERDATA, (LONG_PTR)this);
@@ -1199,7 +1199,7 @@ public:
       r.left = r.top = 0;
       r.right = width;
       r.bottom = height;
-      AdjustWindowRect(&r, WS_POPUP, 0);
+      AdjustWindowRect(&r, WS_OVERLAPPEDWINDOW, 0);
       SetWindowPos(
           m_window, NULL, r.left, r.top, r.right - r.left, r.bottom - r.top,
           SWP_NOZORDER | SWP_NOACTIVATE | SWP_NOMOVE | SWP_FRAMECHANGED);
